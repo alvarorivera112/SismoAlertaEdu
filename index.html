@@ -1,25 +1,49 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>SismoAlertaEdu</title>
-  <meta http-equiv="refresh" content="0; url=login.html">
-  <script>
-    // Fallback por si el meta no redirige
-    location.replace('login.html');
-  </script>
-  <style>
-    body{font-family:system-ui,Segoe UI,Roboto,Arial;background:#0f1117;color:#eaf6ff;display:grid;place-items:center;min-height:100vh;margin:0}
-    a{color:#00e2ff}
-    .box{max-width:640px;padding:24px;text-align:center}
-  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SismoAlerta EDU</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
-  <div class="box">
-    <h1>SismoAlertaEdu</h1>
-    <p>Redirigiendo al acceso… Si no ocurre automáticamente, entra aquí:</p>
-    <p><a href="login.html">Ir a Iniciar sesión</a></p>
-  </div>
+
+<header class="app-header">
+  <h1>SismoAlerta EDU</h1>
+</header>
+
+<main class="app-main">
+  <section class="login-section">
+    <h2>Inicio de sesión</h2>
+    <form class="login-form">
+      <label for="usuario">Usuario</label>
+      <input type="text" id="usuario" name="usuario" placeholder="Ingresa tu usuario" required>
+
+      <label for="clave">Contraseña</label>
+      <input type="password" id="clave" name="clave" placeholder="Ingresa tu contraseña" required>
+
+      <button type="submit" class="btn-login">Iniciar sesión</button>
+    </form>
+
+    <p class="text-muted">¿No tienes cuenta aún?</p>
+    <a href="#" class="btn-register">
+      <i class="fa-solid fa-user-plus"></i> Registrarme
+    </a>
+  </section>
+
+  <section class="app-info">
+    <h2>Simulacro educativo</h2>
+    <p>Practica las acciones seguras ante un sismo, aprende a identificar señales y coordina tu respuesta ante alertas.</p>
+  </section>
+</main>
+
+<footer class="app-footer">
+  <a href="https://alvarorivera112.github.io/SismoAlerta1/" class="btn-volver">
+    <i class="fa-solid fa-house"></i> Volver a la portada
+  </a>
+  <p>© 2025 SismoAlerta EDU</p>
+</footer>
+
 </body>
 </html>
