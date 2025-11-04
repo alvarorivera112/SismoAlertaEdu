@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Acceso — SismoAlerta</title>
+  <link rel="stylesheet" href="auth-styles.css?v=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+<main class="wrap">
+  <section class="card">
+    <div class="brand">
+      <span class="badge"><i class="fa-solid fa-triangle-exclamation"></i></span>
+      <h1>SismoAlerta <b>EDU</b></h1>
+    </div>
+
+    <div class="tabs">
+      <button class="tab active" data-tab="login">Iniciar sesión</button>
+      <button class="tab" data-tab="register">Registrarme</button>
+    </div>
+
+    <div id="alert" class="alert" role="status" aria-live="polite"></div>
+
+    <form id="loginForm" class="form panel show">
+      <label>
+        <span>Correo</span>
+        <input type="email" name="email" required placeholder="tu@correo.com" />
+      </label>
+      <label>
+        <span>Contraseña</span>
+        <input type="password" name="password" required minlength="6" />
+      </label>
+      <button id="loginBtn" type="submit" class="btn">
+        <i class="fa-solid fa-right-to-bracket"></i> Entrar
+      </button>
+    </form>
+
+    <form id="registerForm" class="form panel">
+      <label>
+        <span>Nombre y apellido</span>
+        <input type="text" name="name" required placeholder="Ej. Ana Pérez" />
+      </label>
+      <label>
+        <span>Correo</span>
+        <input type="email" name="email" required placeholder="tu@correo.com" />
+      </label>
+      <label>
+        <span>Contraseña</span>
+        <input type="password" name="password" required minlength="6" placeholder="Mínimo 6 caracteres" />
+      </label>
+      <button id="registerBtn" type="submit" class="btn alt">
+        <i class="fa-solid fa-user-plus"></i> Crear cuenta
+      </button>
+    </form>
+
+    <a class="link" href="./">← Volver a la portada</a>
+  </section>
+</main>
+
+<script src="auth.js?v=1"></script>
+</body>
+</html>
