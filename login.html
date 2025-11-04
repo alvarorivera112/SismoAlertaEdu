@@ -1,64 +1,52 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Acceso — SismoAlerta</title>
-  <link rel="stylesheet" href="auth-styles.css?v=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Iniciar Sesión - SismoAlerta EDU</title>
+
+  <!-- Enlace al CSS -->
+  <link rel="stylesheet" href="styles.css?v=1.1">
+  <!-- Iconos FontAwesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
 
-<main class="wrap">
-  <section class="card">
-    <div class="brand">
-      <span class="badge"><i class="fa-solid fa-triangle-exclamation"></i></span>
-      <h1>SismoAlerta <b>EDU</b></h1>
-    </div>
+<header class="app-header">
+  <h1><i class="fa-solid fa-triangle-exclamation"></i> SismoAlerta EDU</h1>
+</header>
 
-    <div class="tabs">
-      <button class="tab active" data-tab="login">Iniciar sesión</button>
-      <button class="tab" data-tab="register">Registrarme</button>
-    </div>
+<main class="app-main">
+  <section class="login-section">
+    <h2>Inicio de sesión</h2>
+    <form class="login-form">
+      <label for="usuario">Usuario</label>
+      <input type="text" id="usuario" name="usuario" placeholder="Ingresa tu usuario" required>
 
-    <div id="alert" class="alert" role="status" aria-live="polite"></div>
+      <label for="clave">Contraseña</label>
+      <input type="password" id="clave" name="clave" placeholder="Ingresa tu contraseña" required>
 
-    <form id="loginForm" class="form panel show">
-      <label>
-        <span>Correo</span>
-        <input type="email" name="email" required placeholder="tu@correo.com" />
-      </label>
-      <label>
-        <span>Contraseña</span>
-        <input type="password" name="password" required minlength="6" />
-      </label>
-      <button id="loginBtn" type="submit" class="btn">
-        <i class="fa-solid fa-right-to-bracket"></i> Entrar
-      </button>
+      <button type="submit" class="btn-login">Iniciar sesión</button>
     </form>
 
-    <form id="registerForm" class="form panel">
-      <label>
-        <span>Nombre y apellido</span>
-        <input type="text" name="name" required placeholder="Ej. Ana Pérez" />
-      </label>
-      <label>
-        <span>Correo</span>
-        <input type="email" name="email" required placeholder="tu@correo.com" />
-      </label>
-      <label>
-        <span>Contraseña</span>
-        <input type="password" name="password" required minlength="6" placeholder="Mínimo 6 caracteres" />
-      </label>
-      <button id="registerBtn" type="submit" class="btn alt">
-        <i class="fa-solid fa-user-plus"></i> Crear cuenta
-      </button>
-    </form>
+    <p class="text-muted">¿No tienes cuenta aún?</p>
+    <a href="register.html" class="btn-register">
+      <i class="fa-solid fa-user-plus"></i> Registrarme
+    </a>
+  </section>
 
-    <a class="link" href="./">← Volver a la portada</a>
+  <section class="app-info">
+    <h2>Simulacro educativo</h2>
+    <p>Practica las acciones seguras ante un sismo, aprende a identificar señales y coordina tu respuesta ante alertas.</p>
   </section>
 </main>
 
-<script src="auth.js?v=1"></script>
+<footer class="app-footer">
+  <a href="https://alvarorivera112.github.io/SismoAlerta1/" class="btn-volver">
+    <i class="fa-solid fa-house"></i> Volver a la portada
+  </a>
+  <p>© 2025 SismoAlerta EDU</p>
+</footer>
+
 </body>
 </html>
