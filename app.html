@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SismoAlerta — Panel</title>
+  <link rel="stylesheet" href="auth-styles.css?v=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+<header class="appbar">
+  <div class="appbar-inner">
+    <div class="brand">
+      <span class="badge"><i class="fa-solid fa-triangle-exclamation"></i></span>
+      <strong>SismoAlerta <b>EDU</b></strong>
+    </div>
+    <div class="userbox">
+      <span id="welcome"></span>
+      <button id="logoutBtn" class="btn small"><i class="fa-solid fa-right-from-bracket"></i> Salir</button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap content">
+  <section class="panel-in">
+    <h2>Bienvenido</h2>
+    <p>Has iniciado sesión correctamente. Esta es tu página protegida de ejemplo.</p>
+    <ul class="quick">
+      <li><i class="fa-solid fa-wave-square"></i> Practica el modo simulacro</li>
+      <li><i class="fa-solid fa-bell"></i> Revisa el flujo de alerta</li>
+      <li><i class="fa-solid fa-graduation-cap"></i> Explora materiales educativos</li>
+    </ul>
+  </section>
+</main>
+
+<script src="auth.js?v=1"></script>
+<script>
+  protectRoute(); // redirige a login si no hay sesión
+  const user = getCurrentUser();
+  document.getElementById('welcome').textContent = user ? user.name + ' (' + user.email + ')' : '';
+  document.getElementById('logoutBtn').addEventListener('click', () => { logout(); });
+</script>
+
+</body>
+</html>
