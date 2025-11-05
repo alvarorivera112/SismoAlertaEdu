@@ -6,7 +6,6 @@
   <title>Registro - SismoAlerta EDU</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
-    /* (mismo CSS incrustado que en index) */
     *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif}
     body{background:linear-gradient(180deg,#000814,#001d3d);color:#e6f9ff;min-height:100vh;display:flex;flex-direction:column;justify-content:space-between}
     .app-header{text-align:center;padding:20px 0;background:rgba(0,0,0,.45);backdrop-filter:blur(8px);color:#00e2ff;box-shadow:0 2px 10px rgba(0,226,255,.2);font-size:1.5rem}
@@ -77,35 +76,35 @@
 </footer>
 
 <script>
-  /* (mismo JS incrustado) */
-  const LS_USERS_KEY='sa_users';const LS_CURRENT_USER_KEY='sa_current_user';
+  /* Lógica de registro incrustada */
+  const LS_USERS_KEY='sa_users';
   const getUsers=()=>{try{return JSON.parse(localStorage.getItem(LS_USERS_KEY))||[]}catch{return[]}};
-  const saveUsers=(u)=>localStorage.setItem(LS_USERS_KEY,JSON.stringify(u));
-  const setCurrentUser=(u)=>localStorage.setItem(LS_CURRENT_USER_KEY,u);
-  const getCurrentUser=()=>localStorage.getItem(LS_CURRENT_USER_KEY);
-  const logout=()=>localStorage.removeItem(LS_CURRENT_USER_KEY);
+  const saveUsers=u=>localStorage.setItem(LS_USERS_KEY,JSON.stringify(u));
 
-  function attachRegisterHandler(){
-    const form=document.getElementById('registerForm'); if(!form) return;
-    form.addEventListener('submit',(e)=>{
+  document.addEventListener('DOMContentLoaded',()=>{
+    const f=document.getElementById('registerForm'); if(!f) return;
+    f.addEventListener('submit',e=>{
       e.preventDefault();
-      const nombre=document.getElementById('nombre')?.value.trim();
-      const usuario=document.getElementById('usuario')?.value.trim();
-      const correo=document.getElementById('correo')?.value.trim();
-      const clave=document.getElementById('clave')?.value;
-      const clave2=document.getElementById('clave2')?.value;
+      const nombre=document.getElementById('nombre').value.trim();
+      const usuario=document.getElementById('usuario').value.trim();
+      const correo=document.getElementById('correo').value.trim();
+      const clave=document.getElementById('clave').value;
+      const clave2=document.getElementById('clave2').value;
+
       if(!nombre||!usuario||!correo||!clave||!clave2){alert('⚠️ Completa todos los campos.');return;}
       if(clave!==clave2){alert('❌ Las contraseñas no coinciden.');return;}
+
       const users=getUsers();
       const exists=users.some(u=>u.usuario.toLowerCase()===usuario.toLowerCase()||u.correo.toLowerCase()===correo.toLowerCase());
       if(exists){alert('⚠️ El usuario o correo ya existe.');return;}
-      users.push({nombre,usuario,correo,clave}); saveUsers(users);
+
+      users.push({nombre,usuario,correo,clave});
+      saveUsers(users);
+
       alert('✅ Usuario creado con éxito. Ahora puedes iniciar sesión.');
       location.href='index.html';
     });
-  }
-
-  document.addEventListener('DOMContentLoaded',()=>{attachRegisterHandler()});
+  });
 </script>
 </body>
 </html>
