@@ -1,46 +1,40 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>SismoAlerta — Panel</title>
-  <link rel="stylesheet" href="auth-styles.css?v=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Panel – SismoAlerta EDU</title>
+  <link rel="stylesheet" href="./auth-styles.css?v=3">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script src="./auth.js" defer></script>
 </head>
 <body>
 
-<header class="appbar">
-  <div class="appbar-inner">
-    <div class="brand">
-      <span class="badge"><i class="fa-solid fa-triangle-exclamation"></i></span>
-      <strong>SismoAlerta <b>EDU</b></strong>
-    </div>
-    <div class="userbox">
-      <span id="welcome"></span>
-      <button id="logoutBtn" class="btn small"><i class="fa-solid fa-right-from-bracket"></i> Salir</button>
-    </div>
-  </div>
+<header class="app-header">
+  <h1><i class="fa-solid fa-chart-line"></i> Panel de SismoAlerta EDU</h1>
 </header>
 
-<main class="wrap content">
-  <section class="panel-in">
-    <h2>Bienvenido</h2>
-    <p>Has iniciado sesión correctamente. Esta es tu página protegida de ejemplo.</p>
-    <ul class="quick">
-      <li><i class="fa-solid fa-wave-square"></i> Practica el modo simulacro</li>
-      <li><i class="fa-solid fa-bell"></i> Revisa el flujo de alerta</li>
-      <li><i class="fa-solid fa-graduation-cap"></i> Explora materiales educativos</li>
-    </ul>
+<main class="app-main">
+  <section class="login-section">
+    <h2>Hola, <span id="welcomeName">usuario</span> 👋</h2>
+    <p class="text-muted" style="margin-top:8px">Este es un panel demostrativo luego del login.</p>
+    <a href="index.html" class="btn-register" id="btnLogout" style="margin-top:16px">
+      <i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión
+    </a>
+  </section>
+
+  <section class="app-info">
+    <h2>Próximos pasos</h2>
+    <p>Puedes extender este panel con más módulos (simulacros, guías, resultados, etc.).</p>
   </section>
 </main>
 
-<script src="auth.js?v=1"></script>
-<script>
-  protectRoute(); // redirige a login si no hay sesión
-  const user = getCurrentUser();
-  document.getElementById('welcome').textContent = user ? user.name + ' (' + user.email + ')' : '';
-  document.getElementById('logoutBtn').addEventListener('click', () => { logout(); });
-</script>
+<footer class="app-footer">
+  <a href="https://alvarorivera112.github.io/SismoAlerta1/" class="btn-volver">
+    <i class="fa-solid fa-house"></i> Volver a la portada
+  </a>
+  <p>© 2025 SismoAlerta EDU</p>
+</footer>
 
 </body>
 </html>
