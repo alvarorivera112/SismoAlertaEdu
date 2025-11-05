@@ -4,8 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Registro - SismoAlerta EDU</title>
-  <link rel="stylesheet" href="styles.css?v=1.1">
+  <link rel="stylesheet" href="./auth-styles.css?v=3">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script src="./auth.js" defer></script>
 </head>
 <body>
 
@@ -16,7 +17,7 @@
 <main class="app-main">
   <section class="login-section">
     <h2>Registro</h2>
-    <form class="login-form">
+    <form class="login-form" id="registerForm">
       <label for="nombre">Nombre</label>
       <input type="text" id="nombre" name="nombre" placeholder="Tu nombre" required>
 
@@ -48,6 +49,9 @@
 </main>
 
 <footer class="app-footer">
+  <a href="https://alvarorivera112.github.io/SismoAlerta1/" class="btn-volver">
+    <i class="fa-solid fa-house"></i> Volver a la portada
+  </a>
   <p>© 2025 SismoAlerta EDU</p>
 </footer>
 
