@@ -4,9 +4,24 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Panel – SismoAlerta EDU</title>
-  <link rel="stylesheet" href="/SismoAlertaEdu/auth-styles.css?v=4">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <script src="/SismoAlertaEdu/auth.js?v=1" defer></script>
+  <style>
+    /* (mismo CSS incrustado) */
+    *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif}
+    body{background:linear-gradient(180deg,#000814,#001d3d);color:#e6f9ff;min-height:100vh;display:flex;flex-direction:column;justify-content:space-between}
+    .app-header{text-align:center;padding:20px 0;background:rgba(0,0,0,.45);backdrop-filter:blur(8px);color:#00e2ff;box-shadow:0 2px 10px rgba(0,226,255,.2);font-size:1.5rem}
+    .app-main{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:40px;padding:30px;animation:fadeIn 1s ease-in}
+    .login-section{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);border-radius:14px;padding:30px 40px;max-width:420px;width:100%;text-align:center;box-shadow:0 6px 20px rgba(0,0,0,.3)}
+    .text-muted{margin-top:8px;font-size:.9rem;color:#c9f9ff}
+    .btn-register{display:inline-flex;align-items:center;gap:8px;background:transparent;color:#00e2ff;border:2px solid #00e2ff;border-radius:10px;padding:10px 22px;text-decoration:none;font-weight:600;margin-top:16px;transition:.3s}
+    .btn-register:hover{background:#00e2ff;color:#00131a;transform:scale(1.07)}
+    .app-info{text-align:center;max-width:600px;background:rgba(255,255,255,.06);padding:24px;border-radius:14px;border:1px solid rgba(255,255,255,.15);box-shadow:0 6px 20px rgba(0,0,0,.3)}
+    .app-info h2{color:#00e2ff;margin-bottom:12px}
+    .app-footer{text-align:center;padding:20px;background:#001d3d;border-top:1px solid rgba(255,255,255,.1);color:#aefaff;font-size:.9rem}
+    .btn-volver{display:inline-flex;align-items:center;gap:8px;padding:12px 28px;background:#00e2ff;color:#00131a;font-weight:700;border-radius:10px;text-decoration:none;transition:.3s;box-shadow:0 0 18px rgba(0,226,255,.25);margin-bottom:14px}
+    .btn-volver:hover{transform:translateY(-4px);box-shadow:0 0 30px rgba(0,226,255,.45)}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+  </style>
 </head>
 <body>
 
@@ -17,8 +32,8 @@
 <main class="app-main">
   <section class="login-section">
     <h2>Hola, <span id="welcomeName">usuario</span> 👋</h2>
-    <p class="text-muted" style="margin-top:8px">Este es un panel demostrativo luego del login.</p>
-    <a href="index.html" class="btn-register" id="btnLogout" style="margin-top:16px">
+    <p class="text-muted">Este es un panel demostrativo luego del login.</p>
+    <a href="index.html" class="btn-register" id="btnLogout">
       <i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión
     </a>
   </section>
@@ -36,5 +51,20 @@
   <p>© 2025 SismoAlerta EDU</p>
 </footer>
 
+<script>
+  /* (mismo JS incrustado, sólo lo necesario) */
+  const LS_CURRENT_USER_KEY='sa_current_user';
+  const getCurrentUser=()=>localStorage.getItem(LS_CURRENT_USER_KEY);
+  const logout=()=>localStorage.removeItem(LS_CURRENT_USER_KEY);
+
+  document.addEventListener('DOMContentLoaded',()=>{
+    const nameEl=document.getElementById('welcomeName');
+    const btnLogout=document.getElementById('btnLogout');
+    const current=getCurrentUser();
+    if(!current){location.href='index.html';return;}
+    nameEl.textContent=current;
+    btnLogout.addEventListener('click',()=>{logout();location.href='index.html';});
+  });
+</script>
 </body>
 </html>
