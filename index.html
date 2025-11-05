@@ -5,9 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SismoAlerta EDU</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
   <style>
-    /* ===== auth-styles.css (incrustado) ===== */
     *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif}
     body{background:linear-gradient(180deg,#000814,#001d3d);color:#e6f9ff;min-height:100vh;display:flex;flex-direction:column;justify-content:space-between}
     .app-header{text-align:center;padding:20px 0;background:rgba(0,0,0,.45);backdrop-filter:blur(8px);color:#00e2ff;box-shadow:0 2px 10px rgba(0,226,255,.2);font-size:1.5rem}
@@ -69,58 +67,23 @@
 </footer>
 
 <script>
-  /* ===== auth.js (incrustado) ===== */
-  const LS_USERS_KEY='sa_users';const LS_CURRENT_USER_KEY='sa_current_user';
+  /* Lógica incrustada */
+  const LS_USERS_KEY='sa_users', LS_CURRENT_USER_KEY='sa_current_user';
   const getUsers=()=>{try{return JSON.parse(localStorage.getItem(LS_USERS_KEY))||[]}catch{return[]}};
-  const saveUsers=(u)=>localStorage.setItem(LS_USERS_KEY,JSON.stringify(u));
-  const setCurrentUser=(u)=>localStorage.setItem(LS_CURRENT_USER_KEY,u);
-  const getCurrentUser=()=>localStorage.getItem(LS_CURRENT_USER_KEY);
-  const logout=()=>localStorage.removeItem(LS_CURRENT_USER_KEY);
-
-  function attachRegisterHandler(){
-    const form=document.getElementById('registerForm'); if(!form) return;
-    form.addEventListener('submit',(e)=>{
-      e.preventDefault();
-      const nombre=document.getElementById('nombre')?.value.trim();
-      const usuario=document.getElementById('usuario')?.value.trim();
-      const correo=document.getElementById('correo')?.value.trim();
-      const clave=document.getElementById('clave')?.value;
-      const clave2=document.getElementById('clave2')?.value;
-      if(!nombre||!usuario||!correo||!clave||!clave2){alert('⚠️ Completa todos los campos.');return;}
-      if(clave!==clave2){alert('❌ Las contraseñas no coinciden.');return;}
-      const users=getUsers();
-      const exists=users.some(u=>u.usuario.toLowerCase()===usuario.toLowerCase()||u.correo.toLowerCase()===correo.toLowerCase());
-      if(exists){alert('⚠️ El usuario o correo ya existe.');return;}
-      users.push({nombre,usuario,correo,clave}); saveUsers(users);
-      alert('✅ Usuario creado con éxito. Ahora puedes iniciar sesión.');
-      location.href='index.html';
-    });
-  }
-
-  function attachLoginHandler(){
-    const form=document.getElementById('loginForm'); if(!form) return;
-    form.addEventListener('submit',(e)=>{
-      e.preventDefault();
-      const usuario=document.getElementById('usuario')?.value.trim();
-      const clave=document.getElementById('clave')?.value;
-      if(!usuario||!clave){alert('⚠️ Ingresa usuario y contraseña.');return;}
-      const users=getUsers();
-      const found=users.find(u=>u.usuario.toLowerCase()===usuario.toLowerCase()&&u.clave===clave);
-      if(!found){alert('❌ Credenciales inválidas.');return;}
-      setCurrentUser(found.usuario); alert(`👋 Bienvenido, ${found.nombre||found.usuario}`); location.href='app.html';
-    });
-  }
-
-  function hydrateAppScreen(){
-    const nameEl=document.getElementById('welcomeName'); const btnLogout=document.getElementById('btnLogout');
-    if(!nameEl && !btnLogout) return;
-    const current=getCurrentUser(); if(!current){location.href='index.html';return;}
-    if(nameEl) nameEl.textContent=current;
-    if(btnLogout){btnLogout.addEventListener('click',()=>{logout();location.href='index.html';});}
-  }
-
+  const setCurrentUser=u=>localStorage.setItem(LS_CURRENT_USER_KEY,u);
   document.addEventListener('DOMContentLoaded',()=>{
-    attachRegisterHandler(); attachLoginHandler(); hydrateAppScreen();
+    const f=document.getElementById('loginForm'); if(!f) return;
+    f.addEventListener('submit',e=>{
+      e.preventDefault();
+      const usuario=document.getElementById('usuario').value.trim();
+      const clave=document.getElementById('clave').value;
+      const users=getUsers();
+      const ok=users.find(u=>u.usuario.toLowerCase()===usuario.toLowerCase()&&u.clave===clave);
+      if(!ok){alert('❌ Credenciales inválidas.');return;}
+      setCurrentUser(ok.usuario);
+      alert(`👋 Bienvenido, ${ok.nombre||ok.usuario}`); 
+      location.href='app.html';
+    });
   });
 </script>
 </body>
