@@ -1,130 +1,154 @@
-const STORAGE_USERS = 'sa_users';
-const STORAGE_SESSION = 'sa_session';
+/* =======================================================
+   SismoAlerta EDU – Demo educativa de autenticación
+   Manejador de login/registro con localStorage
+   ======================================================= */
 
+const LS_USERS_KEY = 'sa_users';
+const LS_CURRENT_USER_KEY = 'sa_current_user';
+
+// Obtener usuarios guardados
 function getUsers() {
-  try { return JSON.parse(localStorage.getItem(STORAGE_USERS)) || []; }
-  catch { return []; }
-}
-function saveUsers(users) {
-  localStorage.setItem(STORAGE_USERS, JSON.stringify(users));
-}
-function getSession() {
-  try { return JSON.parse(localStorage.getItem(STORAGE_SESSION)); }
-  catch { return null; }
-}
-function setSession(user) {
-  localStorage.setItem(STORAGE_SESSION, JSON.stringify({ email: user.email }));
-}
-function clearSession() {
-  localStorage.removeItem(STORAGE_SESSION);
-}
-function getCurrentUser() {
-  const session = getSession();
-  if (!session) return null;
-  const users = getUsers();
-  return users.find(u => u.email === session.email) || null;
-}
-
-function showAlert(text, type='info') {
-  const el = document.getElementById('alert');
-  if (!el) return;
-  el.textContent = text || '';
-  el.className = 'alert ' + (type || 'info');
-}
-
-function protectRoute() {
-  const session = getSession();
-  if (!session) {
-    window.location.href = 'login.html';
+  try {
+    return JSON.parse(localStorage.getItem(LS_USERS_KEY)) || [];
+  } catch {
+    return [];
   }
 }
 
-function logout() {
-  clearSession();
-  window.location.href = 'login.html';
+// Guardar usuarios en localStorage
+function saveUsers(users) {
+  localStorage.setItem(LS_USERS_KEY, JSON.stringify(users));
 }
 
-function bindTabs() {
-  const tabs = document.querySelectorAll('.tab');
-  const panels = document.querySelectorAll('.panel');
-  tabs.forEach(t => {
-    t.addEventListener('click', () => {
-      tabs.forEach(x => x.classList.remove('active'));
-      t.classList.add('active');
-      const target = t.dataset.tab;
-      panels.forEach(p => p.classList.remove('show'));
-      document.getElementById(target === 'login' ? 'loginForm' : 'registerForm').classList.add('show');
-      showAlert('');
-    });
+// Guardar usuario actual (sesión)
+function setCurrentUser(username) {
+  localStorage.setItem(LS_CURRENT_USER_KEY, username);
+}
+
+// Obtener usuario actual
+function getCurrentUser() {
+  return localStorage.getItem(LS_CURRENT_USER_KEY);
+}
+
+// Cerrar sesión
+function logout() {
+  localStorage.removeItem(LS_CURRENT_USER_KEY);
+}
+
+// =======================================================
+// 🟢 REGISTRO
+// =======================================================
+function attachRegisterHandler() {
+  const form = document.getElementById('registerForm');
+  if (!form) return;
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const nombre = document.getElementById('nombre')?.value.trim();
+    const usuario = document.getElementById('usuario')?.value.trim();
+    const correo = document.getElementById('correo')?.value.trim();
+    const clave = document.getElementById('clave')?.value;
+    const clave2 = document.getElementById('clave2')?.value;
+
+    if (!nombre || !usuario || !correo || !clave || !clave2) {
+      alert('⚠️ Completa todos los campos.');
+      return;
+    }
+
+    if (clave !== clave2) {
+      alert('❌ Las contraseñas no coinciden.');
+      return;
+    }
+
+    const users = getUsers();
+    const exists = users.some(
+      (u) =>
+        u.usuario.toLowerCase() === usuario.toLowerCase() ||
+        u.correo.toLowerCase() === correo.toLowerCase()
+    );
+
+    if (exists) {
+      alert('⚠️ El usuario o correo ya existe. Intenta con otros.');
+      return;
+    }
+
+    // Guardado simple (educativo)
+    users.push({ nombre, usuario, correo, clave });
+    saveUsers(users);
+
+    alert('✅ Usuario creado con éxito. Ahora puedes iniciar sesión.');
+    // Redirige automáticamente al login
+    location.href = 'index.html';
   });
 }
 
+// =======================================================
+// 🟠 LOGIN
+// =======================================================
+function attachLoginHandler() {
+  const form = document.getElementById('loginForm');
+  if (!form) return;
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const usuario = document.getElementById('usuario')?.value.trim();
+    const clave = document.getElementById('clave')?.value;
+
+    if (!usuario || !clave) {
+      alert('⚠️ Ingresa usuario y contraseña.');
+      return;
+    }
+
+    const users = getUsers();
+    const found = users.find(
+      (u) => u.usuario.toLowerCase() === usuario.toLowerCase() && u.clave === clave
+    );
+
+    if (!found) {
+      alert('❌ Credenciales inválidas. Intenta nuevamente.');
+      return;
+    }
+
+    setCurrentUser(found.usuario);
+    alert(`👋 Bienvenido, ${found.nombre || found.usuario}`);
+
+    // Redirigir al panel
+    location.href = 'app.html';
+  });
+}
+
+// =======================================================
+// 🔵 PANTALLA DEL PANEL
+// =======================================================
+function hydrateAppScreen() {
+  const nameEl = document.getElementById('welcomeName');
+  const btnLogout = document.getElementById('btnLogout');
+  if (!nameEl && !btnLogout) return;
+
+  const current = getCurrentUser();
+  if (!current) {
+    // Si no hay sesión activa, vuelve al login
+    location.href = 'index.html';
+    return;
+  }
+
+  if (nameEl) nameEl.textContent = current;
+
+  if (btnLogout) {
+    btnLogout.addEventListener('click', () => {
+      logout();
+      location.href = 'index.html';
+    });
+  }
+}
+
+// =======================================================
+// 🧩 Inicialización automática
+// =======================================================
 document.addEventListener('DOMContentLoaded', () => {
-  bindTabs();
-
-  const loginForm = document.getElementById('loginForm');
-  const registerForm = document.getElementById('registerForm');
-
-  if (loginForm) {
-    const btn = document.getElementById('loginBtn');
-    loginForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      btn.disabled = true;
-
-      const data = new FormData(loginForm);
-      const email = (data.get('email') || '').toString().trim().toLowerCase();
-      const password = (data.get('password') || '').toString();
-
-      const users = getUsers();
-      const user = users.find(u => u.email === email && u.password === password);
-
-      if (!user) {
-        showAlert('Credenciales inválidas.', 'error');
-        btn.disabled = false;
-        return;
-      }
-
-      setSession(user);
-      window.location.href = 'app.html';
-    });
-  }
-
-  if (registerForm) {
-    const btn = document.getElementById('registerBtn');
-    registerForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      btn.disabled = true;
-
-      const data = new FormData(registerForm);
-      const name = (data.get('name') || '').toString().trim();
-      const email = (data.get('email') || '').toString().trim().toLowerCase();
-      const password = (data.get('password') || '').toString();
-
-      if (!name || !email || !password) {
-        showAlert('Completa todos los campos.', 'error');
-        btn.disabled = false;
-        return;
-      }
-
-      const users = getUsers();
-      if (users.some(u => u.email === email)) {
-        showAlert('Ese correo ya está registrado.', 'error');
-        btn.disabled = false;
-        return;
-      }
-
-      users.push({ name, email, password });
-      saveUsers(users);
-
-      showAlert('Registro exitoso. Ahora inicia sesión.', 'success');
-      document.querySelector('.tab[data-tab="login"]').click();
-      registerForm.reset();
-      btn.disabled = false;
-    });
-  }
-
-  const url = new URL(window.location.href);
-  if (url.searchParams.get('from') === 'logout') {
-    showAlert('Sesión cerrada.', 'info');
-  }
+  attachRegisterHandler();
+  attachLoginHandler();
+  hydrateAppScreen();
 });
