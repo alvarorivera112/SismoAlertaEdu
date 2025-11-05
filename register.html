@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Registro - SismoAlerta EDU</title>
+  <link rel="stylesheet" href="styles.css?v=1.1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+<header class="app-header">
+  <h1><i class="fa-solid fa-user-plus"></i> Crear cuenta</h1>
+</header>
+
+<main class="app-main">
+  <section class="login-section">
+    <h2>Registro</h2>
+    <form class="login-form">
+      <label for="nombre">Nombre</label>
+      <input type="text" id="nombre" name="nombre" placeholder="Tu nombre" required>
+
+      <label for="usuario">Usuario</label>
+      <input type="text" id="usuario" name="usuario" placeholder="Elige un usuario" required>
+
+      <label for="correo">Correo</label>
+      <input type="email" id="correo" name="correo" placeholder="tucorreo@ejemplo.com" required>
+
+      <label for="clave">Contraseña</label>
+      <input type="password" id="clave" name="clave" placeholder="Crea una contraseña" required>
+
+      <label for="clave2">Confirmar contraseña</label>
+      <input type="password" id="clave2" name="clave2" placeholder="Repite la contraseña" required>
+
+      <button type="submit" class="btn-login">Crear cuenta</button>
+    </form>
+
+    <p class="text-muted">¿Ya tienes cuenta?</p>
+    <a href="index.html" class="btn-register">
+      <i class="fa-solid fa-right-to-bracket"></i> Volver a iniciar sesión
+    </a>
+  </section>
+
+  <section class="app-info">
+    <h2>Bienvenido a SismoAlerta EDU</h2>
+    <p>Con tu cuenta podrás practicar simulacros, ver guías y reforzar acciones seguras durante un evento sísmico.</p>
+  </section>
+</main>
+
+<footer class="app-footer">
+  <p>© 2025 SismoAlerta EDU</p>
+</footer>
+
+</body>
+</html>
